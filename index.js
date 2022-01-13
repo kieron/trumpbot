@@ -1,6 +1,9 @@
 const fs = require("fs");
 const Discord = require("discord.js");
-const { prefix, token, mcServer, mcPort } = require("./config.json");
+const { prefix } = require("./config.json");
+const token = process.env.token;
+const mcServer = process.env.mcServer;
+const mcPort = process.env.mcPort;
 var request = require("request");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
