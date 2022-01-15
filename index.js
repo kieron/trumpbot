@@ -1,24 +1,21 @@
-const fs = require("fs");
-const Discord = require("discord.js");
-const { prefix } = require("./config.json");
-const token = process.env.token;
+require("dotenv").config();
+const { Client, Intents } = require("discord.js");
+const prefix = "!";
+const token = process.env.TOKEN;
 const mcServer = process.env.mcServer;
 const mcPort = process.env.mcPort;
 var request = require("request");
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-
-const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
-
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.name, command);
-}
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+  ],
+  partials: ["MESSAGE", "CHANNEL", "REACTION"],
+});
 
 client.on("ready", () => console.log(`Logged in as ${client.user.tag}.`));
-client.on("message", (message) => antiSpam.message(message));
+client.on("messageCreate", (message) => antiSpam.message(message));
 
 const AntiSpam = require("discord-anti-spam");
 const antiSpam = new AntiSpam({
@@ -26,7 +23,7 @@ const antiSpam = new AntiSpam({
   kickThreshold: 7, // Amount of messages sent in a row that will cause a ban.
   banThreshold: 7, // Amount of messages sent in a row that will cause a ban.
   maxInterval: 2000, // Amount of time (in milliseconds) in which messages are considered spam.
-  warnMessage: "{@user}, the spamming your doing, knock it off fucker.", // Message that will be sent in chat upon warning a user.
+  warnMessage: "{@user}, the spamming your doing, knock it off.", // Message that will be sent in chat upon warning a user.
   kickMessage: "**{user_tag}** has been kicked for spamming.", // Message that will be sent in chat upon kicking a user.
   banMessage: "**{user_tag}** has been banned for spamming.", // Message that will be sent in chat upon banning a user.
   maxDuplicatesWarning: 7, // Amount of duplicate messages that trigger a warning.
@@ -39,7 +36,7 @@ const antiSpam = new AntiSpam({
   ignoredRoles: ["Moderator", "Terry", "Sheriff"],
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   const args = message.content.slice(prefix.length).split(/ +/);
@@ -114,7 +111,7 @@ client.on("message", (message) => {
   } else if (command === "twitter") {
     console.log("Received Twitter Command!");
     message.reply(
-      "find Terry on twitter here wagwan! <https://twitter.com/terrymynott>"
+      "Find Terry on twitter here wagwan! <https://twitter.com/terrymynott>"
     );
     console.log("Message Sent!");
   } else if (command === "ping") {
