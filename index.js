@@ -230,7 +230,7 @@ client.on("messageCreate", (message) => {
     console.error(error);
   }
 
-  setInterval(sendHeartbeat, 60 * 1000);
+  setInterval(sendHeartbeat, 60 * 5000);
   await client.login(token);
 })();
 
