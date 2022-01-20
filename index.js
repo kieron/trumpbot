@@ -1,3 +1,4 @@
+const axios = require("axios");
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const prefix = "!";
@@ -187,7 +188,7 @@ client.on("messageCreate", (message) => {
         break;
       default:
     }
-  } else if (command === "dice") {
+  } else if (command === "dick") {
     function randomNumber(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -220,4 +221,20 @@ client.on("messageCreate", (message) => {
   }
 });
 
-client.login(token);
+// client.login(token);
+
+(async () => {
+  try {
+    sendHeartbeat();
+  } catch (error) {
+    console.error(error);
+  }
+
+  setInterval(sendHeartbeat, 60 * 1000);
+  await client.login(token);
+})();
+
+function sendHeartbeat() {
+  console.info("Sending Heartbeat");
+  return axios.post(process.env.HEARTBEAT_URL);
+}
