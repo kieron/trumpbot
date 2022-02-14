@@ -235,6 +235,10 @@ client.on("messageCreate", (message) => {
 })();
 
 function sendHeartbeat() {
-  console.info("Sending Heartbeat");
-  return axios.post(process.env.HEARTBEAT_URL);
+  try {
+    console.info("Sending Heartbeat");
+    return axios.post(process.env.HEARTBEAT_URL);
+  } catch (error) {
+    return console.error(error);
+  }
 }
