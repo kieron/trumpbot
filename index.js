@@ -46,7 +46,7 @@ client.on("messageCreate", (message) => {
   if (command === "say") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       const sayMessage = args.join(" ");
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(sayMessage);
     } else {
       message.reply("you are not a high enough level to wield me yet.");
@@ -56,18 +56,18 @@ client.on("messageCreate", (message) => {
   if (command === "livegame") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       const theGame = args.join(" ");
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry's going live on Twitch with " +
-          theGame +
-          " <https://twitch.tv/terrymynott>"
+        theGame +
+        " <https://twitch.tv/terrymynott>"
       );
     } else {
       message.reply("you are not a high enough level to wield me yet.");
     }
   } else if (command === "live") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry's going live on Twitch! <https://twitch.tv/terrymynott>"
       );
@@ -76,7 +76,7 @@ client.on("messageCreate", (message) => {
     }
   } else if (command === "youtube") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry is now live on YouTube! <https://www.youtube.com/c/TerryMynottShow> Come join us!"
       );
@@ -86,23 +86,44 @@ client.on("messageCreate", (message) => {
   } else if (command === "minecraft") {
     var url =
       "http://mcapi.us/server/status?ip=" + mcServer + "&port=" + mcPort;
-    request(url, function (err, response, body) {
-      if (err) {
-        console.log(err);
-        return message.reply("Error getting Minecraft server status...");
-      }
-      body = JSON.parse(body);
-      var status = "*Minecraft server is currently offline*";
-      if (body.online) {
-        status = "Minecraft server is **online**  -  ";
-        if (body.players.now) {
-          status += body.players.now + " people are playing!";
-        } else {
-          status += "*Nobody is playing!*";
+    fetch(url)
+      .then(response => response.json())
+      .then(result => {
+        console.log('Success:', result);
+        var status = "*Minecraft server is currently offline*";
+        if (result.online) {
+          status = "Minecraft server is **online**  -  ";
+          if (result.players.now) {
+            status += result.players.now + " people are playing!";
+          } else {
+            status += "*Nobody is playing!*";
+          }
         }
-      }
-      message.reply(status);
-    });
+        message.reply(status);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        return message.reply("Error getting Minecraft server status...");
+      });
+    // const response = fetch(url)
+    // const data = response.json();
+    // request(url, function (err, response, body) {
+    //   if (err) {
+    //     console.log(err);
+    //     return message.reply("Error getting Minecraft server status...");
+    //   }
+    //   body = JSON.parse(body);
+    //   var status = "*Minecraft server is currently offline*";
+    //   if (body.online) {
+    //     status = "Minecraft server is **online**  -  ";
+    //     if (body.players.now) {
+    //       status += body.players.now + " people are playing!";
+    //     } else {
+    //       status += "*Nobody is playing!*";
+    //     }
+    //   }
+    //   message.reply(status);
+    //});
   } else if (command === "instagram") {
     console.log("Received Instagram Command!");
     message.reply(
