@@ -86,44 +86,42 @@ client.on("messageCreate", (message) => {
   } else if (command === "minecraft") {
     var url =
       "http://mcapi.us/server/status?ip=" + mcServer + "&port=" + mcPort;
-    fetch(url)
-      .then(response => response.json())
-      .then(result => {
-        console.log('Success:', result);
-        var status = "*Minecraft server is currently offline*";
-        if (result.online) {
-          status = "Minecraft server is **online**  -  ";
-          if (result.players.now) {
-            status += result.players.now + " people are playing!";
-          } else {
-            status += "*Nobody is playing!*";
-          }
-        }
-        message.reply(status);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        return message.reply("Error getting Minecraft server status...");
-      });
-    // const response = fetch(url)
-    // const data = response.json();
-    // request(url, function (err, response, body) {
-    //   if (err) {
-    //     console.log(err);
-    //     return message.reply("Error getting Minecraft server status...");
-    //   }
-    //   body = JSON.parse(body);
-    //   var status = "*Minecraft server is currently offline*";
-    //   if (body.online) {
-    //     status = "Minecraft server is **online**  -  ";
-    //     if (body.players.now) {
-    //       status += body.players.now + " people are playing!";
-    //     } else {
-    //       status += "*Nobody is playing!*";
+    // fetch(url)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     console.log('Success:', result);
+    //     var status = "*Minecraft server is currently offline*";
+    //     if (result.online) {
+    //       status = "Minecraft server is **online**  -  ";
+    //       if (result.players.now) {
+    //         status += result.players.now + " people are playing!";
+    //       } else {
+    //         status += "*Nobody is playing!*";
+    //       }
     //     }
-    //   }
-    //   message.reply(status);
-    //});
+    //     message.reply(status);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //     return message.reply("Error getting Minecraft server status...");
+    //   });
+     request(url, function (err, response, body) {
+       if (err) {
+         console.log(err);
+         return message.reply("Error getting Minecraft server status...");
+       }
+       body = JSON.parse(body);
+       var status = "*Minecraft server is currently offline*";
+       if (body.online) {
+         status = "Minecraft server is **online**  -  ";
+         if (body.players.now) {
+           status += body.players.now + " people are playing!";
+         } else {
+           status += "*Nobody is playing!*";
+         }
+       }
+       message.reply(status);
+    });
   } else if (command === "instagram") {
     console.log("Received Instagram Command!");
     message.reply(
