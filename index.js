@@ -227,7 +227,7 @@ client.on("messageCreate", (message) => {
   try {
     sendHeartbeat();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   setInterval(sendHeartbeat, 60 * 5000);
@@ -239,6 +239,6 @@ function sendHeartbeat() {
     console.info("Sending Heartbeat");
     return axios.post(process.env.HEARTBEAT_URL);
   } catch (error) {
-    return console.error(error);
+    return console.log(error);
   }
 }
