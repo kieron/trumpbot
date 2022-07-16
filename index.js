@@ -5,7 +5,7 @@ const prefix = "!";
 const token = process.env.TOKEN;
 const mcServer = process.env.mcServer;
 const mcPort = process.env.mcPort;
-var request = require("request");
+
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -46,7 +46,7 @@ client.on("messageCreate", (message) => {
   if (command === "say") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       const sayMessage = args.join(" ");
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(sayMessage);
     } else {
       message.reply("you are not a high enough level to wield me yet.");
@@ -56,18 +56,18 @@ client.on("messageCreate", (message) => {
   if (command === "livegame") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       const theGame = args.join(" ");
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry's going live on Twitch with " +
-          theGame +
-          " <https://twitch.tv/terrymynott>"
+        theGame +
+        " <https://twitch.tv/terrymynott>"
       );
     } else {
       message.reply("you are not a high enough level to wield me yet.");
     }
   } else if (command === "live") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry's going live on Twitch! <https://twitch.tv/terrymynott>"
       );
@@ -76,7 +76,7 @@ client.on("messageCreate", (message) => {
     }
   } else if (command === "youtube") {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
-      message.delete().catch((O_o) => {});
+      message.delete().catch((O_o) => { });
       message.channel.send(
         "Hey @everyone, Terry is now live on YouTube! <https://www.youtube.com/c/TerryMynottShow> Come join us!"
       );
@@ -84,25 +84,26 @@ client.on("messageCreate", (message) => {
       message.reply("you are not a high enough level to wield me yet, fucker.");
     }
   } else if (command === "minecraft") {
-    var url =
-      "http://mcapi.us/server/status?ip=" + mcServer + "&port=" + mcPort;
-    request(url, function (err, response, body) {
-      if (err) {
-        console.log(err);
-        return message.reply("Error getting Minecraft server status...");
-      }
-      body = JSON.parse(body);
-      var status = "*Minecraft server is currently offline*";
-      if (body.online) {
-        status = "Minecraft server is **online**  -  ";
-        if (body.players.now) {
-          status += body.players.now + " people are playing!";
-        } else {
-          status += "*Nobody is playing!*";
+    var url = `http://mcapi.us/server/status?ip=${mcServer}&port=${mcPort}`;
+
+    axios.get(url)
+      .then(function (response) {
+        var status = "*Minecraft server is currently offline*";
+        if (response.data.online) {
+          status = "Minecraft server is **online**  -  ";
+          if (response.data.players.now) {
+            status += response.data.players.now + " people are playing!";
+          } else {
+            status += "*Nobody is playing!*";
+          }
         }
-      }
-      message.reply(status);
-    });
+        message.reply(status);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+
   } else if (command === "instagram") {
     console.log("Received Instagram Command!");
     message.reply(

@@ -4,11 +4,10 @@
   "description": "Trump discord bot",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.25.0",
+    "axios": "^0.27.2",
     "discord-anti-spam": "^2.7.1",
-    "discord.js": "^13.7.0",
-    "dotenv": "^11.0.0",
-    "request": "^2.88.2"
+    "discord.js": "^13.8.1",
+    "dotenv": "^11.0.0"
   },
   "scripts": {
     "test": "test"
