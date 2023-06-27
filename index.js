@@ -69,7 +69,7 @@ client.on("messageCreate", (message) => {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       message.delete().catch((O_o) => { });
       message.channel.send(
-        "Hey @everyone, Terry's going live on Twitch! <https://twitch.tv/terrymynott>"
+        "Hey @everyone, Terry is going live right now across the multiverse!\nhttps://twitch.tv/terrymynott \nhttps://Kick.com/terrymynott \nhttps://trovo.live/s/TerryMynott/226625392"
       );
     } else {
       message.reply("you are not a high enough level to wield me yet, fucker.");
