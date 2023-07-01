@@ -69,7 +69,7 @@ client.on("messageCreate", (message) => {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       message.delete().catch((O_o) => { });
       message.channel.send(
-        "Hey @everyone, Terry is going live right now across the multiverse!\nhttps://twitch.tv/terrymynott \nhttps://Kick.com/terrymynott \nhttps://trovo.live/s/TerryMynott/226625392 \nhttps://youtube.com/@terrymynott4922"
+        "Hey @everyone, Terry is going live right now across the multiverse!\n<https://twitch.tv/terrymynott> \n<https://Kick.com/terrymynott> \n<https://trovo.live/s/TerryMynott/226625392> \n<https://youtube.com/@terrymynott4922>"
       );
     } else {
       message.reply("you are not a high enough level to wield me yet, fucker.");
@@ -78,7 +78,7 @@ client.on("messageCreate", (message) => {
     if (message.member.roles.cache.some((role) => role.name === "Moderator")) {
       message.delete().catch((O_o) => { });
       message.channel.send(
-        "Hey @everyone, Terry is going live right now across the multiverse!\nhttps://twitch.tv/terrymynott \nhttps://Kick.com/terrymynott \nhttps://trovo.live/s/TerryMynott/226625392"
+        "Hey @everyone, Terry is going live right now across the multiverse!\n<https://twitch.tv/terrymynott> \n<https://Kick.com/terrymynott> \n<https://trovo.live/s/TerryMynott/226625392>"
       );
     } else {
       message.reply("you are not a high enough level to wield me yet, fucker.");
